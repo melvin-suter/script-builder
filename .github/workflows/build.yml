@@ -45,7 +45,12 @@ jobs:
         run: |
           go get .
           GOOS=${{matrix.goos}} GOARCH=${{matrix.goarch}} go build -o dist/${{matrix.filename}}
-          
+
+      - name: Get Changelog
+        uses: andstor/file-reader-action@v1
+        id: changelog
+        with:
+          path: "CHANGELOG.md"
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -54,6 +59,7 @@ jobs:
           file: dist/${{ matrix.filename }}
           asset_name: ${{ matrix.filename }}
           tag: ${{ github.ref }}
+          body: ${ steps.changelog.outputs.contents }
 
 
 
