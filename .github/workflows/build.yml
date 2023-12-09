@@ -16,7 +16,7 @@ jobs:
 
 
           - goos: windows
-            goarch: arm64
+            goarch: amd64
             filename: script-builder_amd64.exe
           - goos: linux
             goarch: amd64
@@ -59,7 +59,7 @@ jobs:
           file: dist/${{ matrix.filename }}
           asset_name: ${{ matrix.filename }}
           tag: ${{ github.ref }}
-          body: ${ steps.changelog.outputs.contents }
+          body: ${{ steps.changelog.outputs.contents }}
 
 
 
