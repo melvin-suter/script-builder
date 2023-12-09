@@ -1,0 +1,14 @@
+zoneset: Fabric_A
+vsan_id: 11
+
+storage_addresses:
+- name: STORAGE_CT1_FC1
+  wwpn: XX:XX:XX:XX:XX:XX:XX:XX
+- name: STORAGE_CT1_FC2
+  wwpn: XX:XX:XX:XX:XX:XX:XX:XX
+
+host_addresses:
+- name: ESX1_VMHBA1
+  wwpn: XX:XX:XX:XX:XX:XX:XX:XX
+- name: ESX1_VMHBA2
+  wwpn: XX:XX:XX:XX:XX:XX:XX:XX

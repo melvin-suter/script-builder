@@ -1,0 +1,30 @@
+{%- for item in storage_addresses %}
+alicreate "{{ item.name }}", "{{ item.wwpn }}"
+{%- endfor %}
+{%- for item in host_addresses %}
+alicreate "{{ item.name }}", "{{ item.wwpn }}"
+{%- endfor %}
+
+{% for host in host_addresses %}
+{%- for storage in storage_addresses %}
+zonecreate "{{ host.name }}_{{ storage.name }}", "{{ host.name }};{{ storage.name }}"
+{%- endfor %}
+{%- endfor %}
+
+
+{%- for host in host_addresses %}
+{% set hostloop = loop %}
+{%- for storage in storage_addresses %}
+{%- if zoneset_create and loop.first and hostloop.first %}
+cfgcreate "{{ zoneset }}", "{{ host.name }}_{{ storage.name }}"
+{%- else %}
+cfgadd "{{ zoneset }}", "{{ host.name }}_{{ storage.name }}"
+{%- endif %}
+{%- endfor -%}
+{%- endfor %}
+
+cfgenable {{ zoneset }}
+cfgsave
+
+write memory
+

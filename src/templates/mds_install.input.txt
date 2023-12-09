@@ -1,0 +1,31 @@
+power redundancy-mode redundant
+feature npiv
+feature fport-channel-trunk
+no feature http-server
+# username admin password 5 $ar2euh2duh29uwh2u89d289hdu  role network-admin
+username admin password 0 adminpasswd  role network-admin
+ip domain-lookup
+ip host switchX  {{ ip_address }}
+ip default-gateway {{ ip_gateway }}
+{% if ntp_ip -%}
+ntp server {{ ntp_ip }}
+{%- endif %}
+vsan database
+  vsan 1 suspend 
+  vsan {{ vsan_id }} name "{{ vsan_name }}" 
+{%- for int in active_interfaces %}
+  vsan {{ vsan_id }} interface {{ int }}
+{%- endfor %}
+ 
+fcdomain priority {{ fcdomain }} vsan 1
+fcdomain optimize fast-restart vsan 1
+fcdomain domain {{ fcdomain }} static vsan 1
+fcdomain priority {{ fcdomain }} vsan {{ vsan_id }}
+fcdomain optimize fast-restart vsan {{ vsan_id }}
+fcdomain domain {{ fcdomain }} static vsan {{ vsan_id }}
+
+system default zone distribute full
+system default zone mode enhanced
+
+zone mode enhanced vsan {{ vsan_id }}
+zone smart-zoning enable vsan {{ vsan_id }}

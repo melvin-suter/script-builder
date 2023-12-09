@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>script.214.li</title>
+        <link href="bootstrap.min.css" rel="stylesheet">
+    
+        <style>
+            html,body,.container-flex,.row {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            .form-control {
+                margin: 0px;
+            }
+
+            .modal-backdrop {
+            }
+        </style>
+      </head>
+      <body data-bs-theme="dark">
+        <div class="container-flex h-100">
+            <div class="d-flex flex-column h-100">
+                <div class="row h-100">
+                    <div class="col-4 h-100">
+                        <textarea class="form-control h-100" id="input"></textarea>
+                    </div>
+                    <div class="col-4 h-100">
+                        <textarea class="form-control h-100" id="config"></textarea>
+                    </div>
+                    <div class="col-4 h-100">
+                        <textarea readonly class="form-control h-100" id="output"></textarea>
+                    </div>
+                </div>
+                <div class="d-block text-center">
+
+                    <button class="btn btn-primary" id="load">Load</button>
+                    <button class="btn btn-primary" id="generate">Generate</button>
+            
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop d-block d-none" id="load-modal">
+            <div class="modal d-block" tabindex="-1">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Open Template</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <ul class="list-group list-group-flush" id="template-list">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="nunjucks.min.js"></script>
+        <script src="yaml.min.js"></script>
+
+        <script src="bootstrap.bundle.min.js"></script>
+
+        <script defer src="app.js"></script>
+    </body>
+</html>

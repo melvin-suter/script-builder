@@ -1,0 +1,10 @@
+ip_address: x.x.x.x
+ip_gateway: x.x.x.x
+ntp_ip: x.x.x.x
+vsan_id: 11
+vsan_name: Fabric-A
+fcdomain: 11
+active_interfaces:
+- fc1/1
+- fc1/2
+- fc1/3

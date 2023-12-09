@@ -1,0 +1,29 @@
+device-alias database
+{%- for item in storage_addresses %}
+device-alias name "{{ item.name }} pwwn {{ item.wwpn }}"
+{%- endfor %}
+{%- for item in host_addresses %}
+device-alias name "{{ item.name }} pwwn {{ item.wwpn }}"
+{%- endfor %}
+device-alias commit 
+
+
+
+{% for host in host_addresses %}
+{%- for storage in storage_addresses %}
+zone name "{{ host.name }}_{{ storage.name }}" vsan {{ vsan_id }}
+member device-alias {{ host.name }}
+member device-alias {{ storage.name }}
+{%- endfor %}
+{%- endfor %}
+
+
+zoneset name {{ zoneset }} vsan {{ vsan_id }}
+{% for host in host_addresses %}
+{%- for storage in storage_addresses %}
+member "{{ host.name }}_{{ storage.name }}"
+{%- endfor %}
+{%- endfor %}
+
+zoneset activate name {{ zoneset }} vsan {{ vsan_id }}
+zone commit vsan {{ vsan_id }}

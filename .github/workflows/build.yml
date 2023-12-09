@@ -1,0 +1,59 @@
+name: Build
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        include:
+
+
+          - goos: windows
+            goarch: arm64
+            filename: script-builder_amd64.exe
+          - goos: linux
+            goarch: amd64
+            filename: script-builder_linux_amd64
+          - goos: linux
+            goarch: arm64
+            filename: script-builder_linux_arm64
+          - goos: darwin
+            goarch: arm64
+            filename: script-builder_darwin_arm64
+          - goos: darwin
+            goarch: amd64
+            filename: script-builder_darwin_amd64
+
+
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+      
+      - name: Build
+        run: |
+          go get .
+          GOOS=${{matrix.goos}} GOARCH=${{matrix.goarch}} go build -o dist/${{matrix.filename}}
+          
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/${{ matrix.filename }}
+          asset_name: ${{ matrix.filename }}
+          tag: ${{ github.ref }}
+
+
+
