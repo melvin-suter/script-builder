@@ -1,4 +1,4 @@
-name: Build
+name: Build Binaries
 on:
   push:
     # Sequence of patterns matched against refs/tags
@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build:
+  build-binaries:
     runs-on: ubuntu-latest
     
     strategy:
